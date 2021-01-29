@@ -1,2 +1,28 @@
- thi is sample file 
-this is bugfix branch
+pipeline{
+    agent any
+    environment{
+        PATH= " /usr/share/maven:$PATH"
+    }
+    stages{
+        stage("git"){
+           steps{
+            git credentialsId: 'git_cre', url: 'https://github.com/govi321/spring3-mvc-maven-xml-hello-world.git'
+            
+            }
+        }
+        stage("build"){
+           steps{
+            sh "mvn clean install"
+            
+            }
+        }    
+        stage("deploy"){
+           steps{
+            sshagent(['tomcat']) {
+                sh "scp  -o StrictHostKeyChecking=no /target/spring3-mvc-maven-xml-hello-world-1.0-SNAPSHOT.war ubunut@18.136.209.246:/var/lib/tomcat8/webapp"
+            }
+        }    
+    }
+            
+            }
+        }    
