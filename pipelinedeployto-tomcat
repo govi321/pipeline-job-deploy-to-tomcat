@@ -1,0 +1,25 @@
+
+pipeline{
+    agent any
+    stages{
+        stage("git"){
+            steps{
+               git credentialsId: 'gitcredentials1', url: 'https://github.com/govi321/helloworld.git'
+            }
+        }
+        stage("build maven"){
+            steps{
+               sh " mvn clean install "
+            }
+        }
+        stage("deploy"){
+            steps{
+               sshagent(['dep-user']) { 
+                 sh "scp -o StrictHostKeyChecking=no target/helloworld.war ubuntu@54.252.131.226:webapps"
+ 
+
+                }
+            }
+        }    
+    }
+}
