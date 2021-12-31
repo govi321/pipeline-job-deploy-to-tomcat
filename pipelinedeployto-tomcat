@@ -15,7 +15,7 @@ pipeline{
         stage("deploy"){
             steps{
                sshagent(['dep-user']) { 
-                 sh "scp -o StrictHostKeyChecking=no target/helloworld.war ubuntu@54.252.131.226:webapps"
+                 sh " scp -o StrictHostKeyChecking=no target/helloworld.war ubuntu@54.252.131.226:webapps "
  
 
                 }
