@@ -1,0 +1,31 @@
+This piplinea also working fine(Welcome to Valaxy Technologies
+Steup and deploy using jenkins)
+it will appear in the tomcat server everthing is correct in this below
+but you should change the permission
+chmod -R ubuntu:ubuntu /opt
+
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Git') {
+            steps {
+                git credentialsId: 'git_credntal', url: 'https://github.com/govi321/hello-world-1.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh " mvn clean install "
+            }
+        }
+         stage('Deploy') {
+            steps {
+                sshagent(['Deploy_user']) {
+                sh " scp -o StrictHostKeyChecking=no webapp/target/webapp.war ubuntu@65.0.21.26:/opt/apache-tomcat-9.0.65/webapps "
+            }
+        }
+    }
+}
+}
