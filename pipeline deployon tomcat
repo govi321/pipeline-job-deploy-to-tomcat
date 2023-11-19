@@ -3,6 +3,8 @@ Steup and deploy using jenkins)
 it will appear in the tomcat server everthing is correct in this below
 but you should change the permission
 chmod -R ubuntu:ubuntu /opt
+vi /etc/ssh/sshd_config
+passwordauthentication yes
 
 
 
